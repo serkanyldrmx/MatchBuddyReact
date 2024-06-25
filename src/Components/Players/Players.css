@@ -1,0 +1,17 @@
+.playersPostContainer {
+    background-image: url("../../images/stadyum5.jpg");
+    background-size: cover;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 60px;
+  }
+  
+  .playerCard {
+    background-image: url("../../images/banner-bg.jpg");
+    background-size: cover;
+    margin: 20px;
+  }
+  
+  
+  

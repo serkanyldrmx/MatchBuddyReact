@@ -1,0 +1,18 @@
+.stadiumPostContainer {
+  background-image: url("../../images/stadyum5.jpg");
+  background-size: cover;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin-top: 60px;
+  gap: 20px; /* Kartlar arasındaki boşluğu ayarlamak için gap özelliğini kullanıyoruz */
+}
+
+.stadiumCard {
+  background-image: url("../../images/banner-bg.jpg");
+  background-size: cover;
+  width: 300px; /* Kart genişliğini isteğinize göre ayarlayabilirsiniz */
+  margin: 20px; /* İstediğiniz boşluk miktarını ayarlayabilirsiniz */
+}

@@ -1,0 +1,67 @@
+/* src/Components/Chat/ChatWindow.css */
+
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.8); /* Arka planı biraz saydam yaptık */
+  border-left: 1px solid #ccc; /* Sağda bir kenar çizgisi ekledik */
+}
+
+.navbar {
+  flex: 0 0 60px; /* Navbar'ın genişliği ve sabit kalması için ayarlandı */
+}
+
+.content {
+  flex: 1; /* İçerik alanı navbar hariç tüm genişliği kaplasın */
+  display: flex;
+  flex-direction: column;
+}
+
+.messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f0f0f0; /* Mesaj arkaplan rengi */
+  word-wrap: break-word; /* Uzun kelimeleri kırpar */
+}
+
+.message.current {
+  text-align: right;
+}
+
+.input-container {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: white; /* Arka plan rengini beyaz yaptık */
+  align-items: center; /* Elemanları dikeyde hizalamak için */
+}
+
+.input-container input {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px; /* Input metin boyutunu düzenledik */
+}
+
+.input-container button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.input-container button:hover {
+  background-color: #0056b3;
+}

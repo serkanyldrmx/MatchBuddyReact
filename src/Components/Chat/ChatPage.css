@@ -1,0 +1,39 @@
+/* src/Components/Chat/ChatPage.css */
+
+.chat-container {
+  background-image: url("../../images/mesaj.jpg");
+  background-size: cover;
+  display: flex;
+  height: 100vh;
+}
+  
+  .user-list {
+    background-image: url("../../images/mavi.jpg");
+    background-size: cover;
+    width: 25%;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    padding-top: 60px; /* Navbar yüksekliği kadar padding ekledik */
+  }
+  
+  .user-list input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .user-list div {
+    cursor: pointer;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.8); /* Kullanıcı listesi arka plan rengini saydam yaptık */
+  }
+  
+  .user-list div:hover {
+    background-color: #f0f0f0;
+  }
+  

@@ -1,0 +1,10 @@
+.postCard{
+    background-image: url("../../images/stadyumm.jpg");
+    background-size: cover;
+    
+}
+
+.savePost{
+    background-image: url("../../images/banner-bg.jpg");
+    background-size: cover;
+}
