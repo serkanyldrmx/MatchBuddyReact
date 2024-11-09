@@ -1,47 +1,71 @@
-/* src/Components/Chat/ChatWindow.css */
-
-.chat-window {
+/* Chat Penceresi Genel Ayarları */
+.chat-container {
+  background-size: cover;
   display: flex;
-  flex-direction: column;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.8); /* Arka planı biraz saydam yaptık */
-  border-left: 1px solid #ccc; /* Sağda bir kenar çizgisi ekledik */
+  justify-content: flex-start; /* İçerik alanını sıkıştırır */
+  padding: 0 20px; /* Sağ ve sol kenarlarda boşluk bırakır */
+  gap: 0; /* Aradaki boşluğu sıfırlar */
 }
 
-.navbar {
-  flex: 0 0 60px; /* Navbar'ın genişliği ve sabit kalması için ayarlandı */
+/* Chat Window Penceresi */
+.chat-window-container {
+  width: 90%; /* Mesaj penceresinin genişliği */
+  padding: 5px;
+  height: calc(100vh - 60px); /* 60px navbar'ın yüksekliği, bunu ayarla */
+  position: relative;
 }
 
-.content {
-  flex: 1; /* İçerik alanı navbar hariç tüm genişliği kaplasın */
-  display: flex;
-  flex-direction: column;
+/* Mesaj Balonları */
+.message {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 50%;
+  clear: both;
+  word-wrap: break-word;
+}
+
+.message p {
+  margin: 0;
+}
+
+/* Kullanıcının Kendi Mesajları */
+.message.current {
+  background-color: #9bf854;
+  margin-left: auto;
+  text-align: right;
+  float: right;
+}
+
+/* Diğer Kullanıcıların Mesajları */
+.message.other {
+  background-color: #d2a5a5;
+  text-align: left;
+  float: left;
 }
 
 .messages {
   flex: 1;
   padding: 10px;
   overflow-y: auto;
+  max-height: calc(100vh - 150px);
 }
 
-.message {
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 8px;
-  background-color: #f0f0f0; /* Mesaj arkaplan rengi */
-  word-wrap: break-word; /* Uzun kelimeleri kırpar */
+/* Mesajın Gönderim Zamanı */
+.message span {
+  font-size: 10px;
+  display: block;
+  margin-top: 5px;
 }
 
-.message.current {
-  text-align: right;
-}
-
+/* Mesaj Yazma Alanı */
 .input-container {
   display: flex;
   padding: 10px;
   border-top: 1px solid #ccc;
-  background-color: white; /* Arka plan rengini beyaz yaptık */
-  align-items: center; /* Elemanları dikeyde hizalamak için */
+  background-color: white;
+  align-items: center;
 }
 
 .input-container input {
@@ -49,8 +73,7 @@
   padding: 10px;
   margin-right: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px; /* Input metin boyutunu düzenledik */
+  border-radius: 20px;
 }
 
 .input-container button {
@@ -58,7 +81,7 @@
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px;
   cursor: pointer;
 }
 

@@ -1,39 +1,107 @@
-/* src/Components/Chat/ChatPage.css */
-
+/* Chat Sayfası Genel Ayarları */
 .chat-container {
-  background-image: url("../../images/mesaj.jpg");
-  background-size: cover;
+  /* background-image: url("../../images/mesaj.jpg"); */
+  background-color: #eceff3;
   display: flex;
-  height: 100vh;
+  background-size: cover;
+  justify-content: flex-start; /* Aralarındaki boşlukları azaltır */
+  gap: 0; /* Chat penceresi ile kullanıcı listesi arasındaki boşluğu ortadan kaldırır */
+  margin-top: 18px;
 }
-  
-  .user-list {
-    background-image: url("../../images/mavi.jpg");
-    background-size: cover;
-    width: 25%;
-    border-right: 1px solid #ccc;
-    padding: 10px;
-    padding-top: 60px; /* Navbar yüksekliği kadar padding ekledik */
-  }
-  
-  .user-list input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .user-list div {
-    cursor: pointer;
-    padding: 8px;
-    margin-bottom: 5px;
-    border-bottom: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: rgba(255, 255, 255, 0.8); /* Kullanıcı listesi arka plan rengini saydam yaptık */
-  }
-  
-  .user-list div:hover {
-    background-color: #f0f0f0;
-  }
-  
+
+.chat-window-container {
+  width: 60%; /* Chat penceresi için genişlik ayarı */
+  overflow-y: auto; /* Kaydırma çubuğu eklemek için */
+  margin-left: 0; /* Aradaki boşluğu sıfırlar */
+}
+
+/* Chat Penceresi ve Kullanıcı Listesi Ayarları */
+.user-list-container,
+.chat-window-container {
+  height: 100vh; /* Ekranın tamamını kaplar */
+  padding: 0; /* Aradaki boşlukları kaldırmak için padding'i sıfırlıyoruz */
+  margin: 0; /* Aradaki boşluğu sıfırlar */
+  margin-top: 30px;
+}
+
+/* Kullanıcı Listesi Ayarları */
+.user-list-container {
+  width: 15%; /* Kullanıcı listesi için genişlik ayarı */
+  overflow-y: auto; /* Kaydırma çubuğu eklemek için */
+  margin-right: 0; /* Aradaki boşluğu sıfırlar */
+  padding: 15px; /* İçerideki boşluğu artırmak için padding */
+  border-radius: 8px; /* Kutuların kenarlarını yuvarlamak için */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Kutulara hafif gölge */
+  max-height: 600px; /* Maksimum yükseklik 800px */
+  height: auto; /* İçerik yüksekliği otomatik olarak ayarlanır ama 800px'yi geçemez */
+}
+
+/* Kullanıcı Listesi Elemanları */
+.user-list div {
+  padding: 15px;
+  margin-bottom: 5px; /* Elemanlar arasındaki boşluğu artırmak için */
+  border-radius: 8px; /* Her elemanı kutu içine almak için yuvarlanmış köşeler */
+  cursor: pointer; /* Tıklanabilir göstermek için */
+  transition: all 0.3s ease; /* Hover efekti için yumuşak geçiş */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Her elemanı kutu içine almak için gölge */
+}
+
+/* Kullanıcı Elemanına Hover Efekti */
+.user-list div:hover {
+  background-color: #8af0f8; /* Fare üzerine geldiğinde arka plan rengi */
+  transform: translateY(-5px); /* Hafif yukarı kayma efekti */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Hoverda daha belirgin bir gölge */
+}
+
+/* Kullanıcı Listesi Başlığı */
+.friends-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4A90E2;
+  margin-bottom: 20px; /* Başlık ile liste arasındaki boşluk */
+  text-align: center;
+  text-transform: uppercase;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+}
+
+/* Kullanıcı Listesi Başlığı */
+.friends-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #29323b; /* Başlangıçta mavi renk */
+  margin-bottom: 10px; /* Başlık ile liste arasındaki boşluk */
+  border-bottom: solid #ccea73;
+  padding-bottom: 5px;
+  pointer-events: none; /* Başlığı tıklanamaz yapar */
+}
+
+/* Başlık üzerine gelindiğinde renk değişikliği */
+.friends-title:hover {
+  color: #adfe61; /* Hoverda renk maviye dönsün */
+}
+
+/* Group Messages Konteyner Ayarları */
+.group-messages-container {
+  width: 20%; /* Group Messages için genişlik ayarı */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif gölge efekti */
+}
+
+/* Group Messages Başlık */
+.group-messages-header h2 {
+  text-align: center;
+  color: #007bff;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+/* Group Messages İçeriği */
+.group-messages-content {
+  text-align: center;
+  color: #333;
+}
+
+
+

@@ -1,45 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '../Navbar/Navbar';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import './ChatWindow.css';
 
 function ChatWindow({ currentUser, selectedUser }) {
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState('');
+  const [messages, setMessages] = useState([]); // Mesajları tutmak için state
+  const [newMessage, setNewMessage] = useState(''); // Yeni mesaj state
+  const messagesEndRef = useRef(null); // Scroll işlemi için referans
+  const [isAutoScroll, setIsAutoScroll] = useState(true); // Otomatik kaydırma kontrolü
 
+  // Mesajları çekme işlemi
   useEffect(() => {
     const fetchMessages = async () => {
-      const messageData = {
-        matchMessage: newMessage,
-        sendingDate: new Date().toISOString(),
-        status: 1,
-        sendPlayerId: currentUser.playerId,
-        recipientPlayerId: selectedUser.playerId,
-      };
-
-      try {
-        const response = await axios.post("http://localhost:5033/api/Message/GetMessageById", {
-          sendPlayerId: currentUser.playerId,
-          recipientPlayerId: selectedUser.playerId,
-        });
-        const data = response.data;
-        if (!data || data.length === 0) {
-          setMessages([]);
-          return;
+      if (currentUser && selectedUser) {
+        try {
+          const response = await axios.post('http://localhost:5033/api/Message/GetMessageById', {
+            sendPlayerId: currentUser.playerId,
+            recipientPlayerId: selectedUser.playerId,
+          });
+          const data = response.data;
+          setMessages(data.sort((a, b) => new Date(a.date) - new Date(b.date)));
+        } catch (err) {
+          console.error('Mesajlar çekilirken hata oluştu:', err);
         }
-        data.sort((a, b) => new Date(a.date) - new Date(b.date));
-        setMessages(data);
-      } catch (err) {
-        console.error(err);
       }
     };
+    fetchMessages();
+  }, [currentUser, selectedUser]);
 
-    if (currentUser && selectedUser) {
-      fetchMessages();
+  // Otomatik kaydırma işlemi
+  const scrollToBottom = useCallback(() => {
+    if (isAutoScroll && messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [currentUser, selectedUser, newMessage]);
+  }, [isAutoScroll]);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, scrollToBottom]);
+
+  // Mesaj gönderme işlemi
   const handleSendMessage = async () => {
+    if (newMessage.trim() === '') return; // Boş mesaj gönderimini engelle
+
     const messageData = {
       matchMessage: newMessage,
       sendingDate: new Date().toISOString(),
@@ -50,35 +52,33 @@ function ChatWindow({ currentUser, selectedUser }) {
 
     try {
       const response = await axios.post('http://localhost:5033/api/Message/MessageSave', messageData);
-      const data = response.data;
-      setMessages([...messages, data]);
-      setNewMessage('');
+      setMessages([...messages, response.data]); // Yeni mesajı mesaj listesine ekle
+      setNewMessage(''); // Mesaj kutusunu temizle
     } catch (error) {
       console.error('Mesaj gönderilirken hata oluştu:', error);
     }
   };
 
+  // Scroll pozisyonu kontrolü
+  const handleScroll = (e) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.target;
+    setIsAutoScroll(scrollTop + clientHeight === scrollHeight);
+  };
+
   if (!currentUser || !selectedUser) {
-    return (
-      <div className="chat-window">
-        <Navbar />
-        <div className="messages">
-          Kullanıcı bilgileri eksik. Lütfen tekrar giriş yapınız.
-        </div>
-      </div>
-    );
+    return <div>Kullanıcı bilgileri eksik. Lütfen tekrar giriş yapınız.</div>;
   }
 
   return (
     <div className="chat-window">
-      <Navbar />
-      <div className="messages">
+      <div className="messages" onScroll={handleScroll}>
         {messages.map((msg, index) => (
-          <div key={index} className={msg.sendPlayerId === currentUser.playerId ? 'message current' : 'message'}>
+          <div key={index} className={`message ${msg.sendPlayerId === currentUser.playerId ? 'current' : 'other'}`}>
             <p>{msg.matchMessage}</p>
-            <span>{msg.sendPlayerId === currentUser.playerId ? 'Ben' : selectedUser.name}</span>
+            <span>{msg.sendPlayerId === currentUser.playerId ? 'Ben' : `${selectedUser.playerName} ${selectedUser.playerSurname}`}</span>
           </div>
         ))}
+        <div ref={messagesEndRef} /> {/* En son mesaja kaydırmak için referans */}
       </div>
       <div className="input-container">
         <input

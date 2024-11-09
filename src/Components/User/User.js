@@ -3,19 +3,48 @@ import { Card, Avatar, List, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import "./User.css";
 import Navbar from "../Navbar/Navbar";
+import { useParams } from 'react-router-dom';
 
 const { Meta } = Card;
 const { Text } = Typography;
 
-function User(userId) {
+function User() {
+  const { userId } = useParams(); // userId'yi al
   const [player, setPlayer] = useState();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setPlayer(JSON.parse(localStorage.getItem("user")));
-  }, []);
+    const fetchPlayerById = async () => {
+      try {
+        const response = await fetch(`http://localhost:5033/api/Players/GetPlayerById?userId=${userId}`);
+        if (!response.ok) {
+          throw new Error('API isteğinde bir hata oluştu');
+        }
+        const data = await response.json();
+        setPlayer(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (userId) {
+      fetchPlayerById();
+    }
+  }, [userId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Hata: {error}</div>;
+  }
 
   if (!player) {
-    return <div>Loading...</div>;
+    return <div>Kullanıcı bulunamadı.</div>;
   }
 
   const labelStyle = { color: "#ffffff", marginRight: '5px', fontWeight: 'bold' };
@@ -37,7 +66,7 @@ function User(userId) {
 
   return (
     <div className="user" style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", padding: '20px', backgroundColor: "#f0f2f5" }}>
-     <Navbar></Navbar>
+      <Navbar />
       <Card className="card" style={{ width: 340, borderRadius: 10, boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "10px 0" }}>
           <Avatar size={64} icon={<UserOutlined />} style={{ marginBottom: "20px" }} />
