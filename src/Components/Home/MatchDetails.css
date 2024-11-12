@@ -1,0 +1,77 @@
+
+/* Navbar boşluğu */
+.match-info {
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Maç genel kart stili */
+.match-card {
+  width: 100%;
+  max-width: 800px;
+  background-color: #3cc1b8;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Takım kartları düzenleme */
+.team-section {
+  margin-top: 20px;
+}
+
+.team-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.team-card:hover {
+  transform: scale(1.05);
+}
+
+.team-card .MuiTypography-body1 {
+  color: #555;
+}
+
+/* Buton stili */
+.match-card .MuiButton-contained {
+  width: 100%;
+  margin-top: 15px;
+}
+
+/* Kart başlıkları */
+.MuiCardHeader-root {
+  background-color: #f1f1f1;
+  border-radius: 8px 8px 0 0;
+}
+
+.MuiAvatar-root {
+  background-color: #ff5722;
+}
+
+.match-card h6 {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Genel düzen */
+.match-info h6 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.match-info button {
+  margin-top: 15px;
+  background-color: #2196F3;
+  color: white;
+  border-radius: 4px;
+}
+
+.match-info button:hover {
+  background-color: #1976D2;
+}

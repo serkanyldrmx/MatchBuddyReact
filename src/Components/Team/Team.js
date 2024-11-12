@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import { UserOutlined } from "@ant-design/icons";
@@ -18,7 +19,7 @@ const TeamsListContainer = styled('div')({
 });
 
 const ContentContainer = styled('div')({
-  marginTop: '70px',  // Navbar'ın yüksekliği kadar boşluk bırakın
+  marginTop: '70px',
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
@@ -60,6 +61,19 @@ const Team = () => {
                   </Typography>
                 }
               />
+              <CardContent>
+                {/* Oyuncu sayısını göster */}
+                <Typography variant="body2" color="textSecondary" sx={{ marginBottom: '8px' }}>
+                  Oyuncu Sayısı: {team.playerName.length}
+                </Typography>
+                
+                {/* Oyuncu isimlerini listele */}
+                {team.playerName.map((player, index) => (
+                  <Typography key={index} variant="body2" color="textSecondary">
+                    {player}
+                  </Typography>
+                ))}
+              </CardContent>
             </Card>
           ))}
         </TeamsListContainer>

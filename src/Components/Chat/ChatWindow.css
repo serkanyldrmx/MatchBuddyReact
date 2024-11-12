@@ -21,7 +21,7 @@
   margin-bottom: 15px;
   padding: 10px;
   border-radius: 10px;
-  max-width: 50%;
+  max-width: 50%;  /* Mesaj balonları genişliğini sınırlayın */
   clear: both;
   word-wrap: break-word;
 }
@@ -32,7 +32,6 @@
 
 /* Kullanıcının Kendi Mesajları */
 .message.current {
-  background-color: #9bf854;
   margin-left: auto;
   text-align: right;
   float: right;
@@ -40,7 +39,6 @@
 
 /* Diğer Kullanıcıların Mesajları */
 .message.other {
-  background-color: #d2a5a5;
   text-align: left;
   float: left;
 }

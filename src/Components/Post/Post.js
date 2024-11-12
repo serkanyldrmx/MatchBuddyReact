@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button'; // Button bileşenini import et
+import Button from '@mui/material/Button';
 import "./Post.css";
 import CommentIcon from '@mui/icons-material/Comment';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -30,11 +30,11 @@ const ExpandMore = styled((props) => {
 }));
 
 function Post(props) {
-  const { postId, matchName, description, userCount, matchDate } = props;
+  const { matchId, matchName, description, userCount, matchDate } = props;
   const [expanded, setExpanded] = useState(false);
   const formattedDate = new Intl.DateTimeFormat('en-US').format(new Date(matchDate));
   const [liked, setLiked] = useState(false);
-  const [commentList, setCommentList] = useState([]);
+  const [commentList, setCommentList] = useState([]); // Başlangıçta boş dizi
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const isInitialMount = useRef(true);
@@ -53,22 +53,27 @@ function Post(props) {
 
   const handleLike = () => {
     setLiked(!liked);
-  }
+  };
 
   const refreshComments = () => {
-    fetch(`http://localhost:5033/api/Match/GetMatchComments?postId=${postId}`)
+    fetch(`http://localhost:5033/api/Match/GetMatchComments?matchId=${matchId}`)
       .then(res => res.json())
       .then(
         (result) => {
           setIsLoaded(true);
-          setCommentList(result);
+          // Yalnızca dizi verisi alındığında commentList'e aktar
+          if (Array.isArray(result)) {
+            setCommentList(result);
+          } else {
+            setCommentList([]); // Dizi olmayan veri geldiğinde boş dizi ata
+          }
         },
         (error) => {
           setIsLoaded(true);
           setError(error);
         }
       );
-  }
+  };
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -79,72 +84,66 @@ function Post(props) {
   }, []);
 
   const handleSubmit = () => {
-      message.success("Maça Katıldınız");
-  }
+    message.success("Maça Katıldınız");
+  };
 
   return (
     <div className="postContainer">
-      <Card className="postCard" sx={{ margin: '20px', width: '500px', backgroundColor: '#3cc1b8' }}>
-        <CardHeader
-          avatar={
-            <Link to={{ pathname: '/user'}}>
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                {matchName.charAt(0).toUpperCase()}
-              </Avatar>
-            </Link>
-          }
-          title={"Maç Adı: " + matchName}
-          subheader={
-            <div>
-              <div>{"Maç tarihi: " + formattedDate}</div>
-              <div>{"Katılımcı Sayısı: " + userCount}</div>
-            </div>
-          }
-        />
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            {description}
-          </Typography>
-          {/* Maça Katıl Butonu */}
-          <Button
-            variant="contained"
-            style={{
-              background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-              color: 'white',
-              marginTop: '15px',
-            }}
-            onClick={handleSubmit}
-          >
-           Bu Maça katıl
-          </Button>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton onClick={handleLike} aria-label="add to favorites">
-            <FavoriteIcon style={liked ? { color: "red" } : null} />
-          </IconButton>
-          
-          <ExpandMore
-            expand={expanded.toString()}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <CommentIcon />
-          </ExpandMore>
-          
-          
-          
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <Container fixed className="container">
-            {error ? "Error" :
-              isLoaded ? commentList.map(comment => (
-                <Comment key={comment.id} userId={comment.userId} userName={comment.userName} text={comment.text} />
-              )) : "Loading"}
-          </Container>
-        </Collapse>
-      </Card >
-    </div>
+  <Card className="postCard" sx={{ margin: '20px', width: '500px', backgroundColor: '#3cc1b8', padding: '16px' }}>
+    <Link to={`/match-details/${matchId}`}>
+      <Avatar sx={{ bgcolor: red[500], marginBottom: '16px' }} aria-label="recipe">
+        {matchName.charAt(0).toUpperCase()}
+      </Avatar>
+    </Link>
+    <Typography variant="h6" component="div">
+      {"Maç Adı: " + matchName}
+    </Typography>
+    <Typography variant="body2" color="text.secondary">
+      {"Maç tarihi: " + formattedDate}
+    </Typography>
+    <Typography variant="body2" color="text.secondary">
+      {"Katılımcı Sayısı: " + userCount}
+    </Typography>
+    <CardContent>
+      <Typography variant="body2" color="text.secondary">
+        {description}
+      </Typography>
+      <Button
+        variant="contained"
+        style={{
+          background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+          color: 'white',
+          marginTop: '15px',
+        }}
+        onClick={handleSubmit}
+      >
+        Bu Maça katıl
+      </Button>
+    </CardContent>
+    <CardActions disableSpacing>
+      <IconButton onClick={handleLike} aria-label="add to favorites">
+        <FavoriteIcon style={liked ? { color: "red" } : null} />
+      </IconButton>
+      <ExpandMore
+        expand={expanded.toString()}
+        onClick={handleExpandClick}
+        aria-expanded={expanded}
+        aria-label="show more"
+      >
+        <CommentIcon />
+      </ExpandMore>
+    </CardActions>
+    <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Container fixed className="container">
+        {error ? "Error" :
+          isLoaded ? commentList.length > 0 ? commentList.map(comment => (
+            <Comment key={comment.id} userId={comment.userId} userName={comment.userName} text={comment.text} />
+          )) : "No comments yet" : "Loading..."}
+      </Container>
+    </Collapse>
+  </Card>
+</div>
+
   );
 }
 

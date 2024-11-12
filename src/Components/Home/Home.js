@@ -53,7 +53,7 @@ function Home() {
 
                     {postList.map(post => (
                         <Post
-                            postId={post.postId}
+                            matchId={post.matchId}
                             key={post.id} // Her öğenin benzersiz bir anahtarı olması önemlidir
                             matchName={post.matchName}
                             description={post.description}

@@ -11,6 +11,7 @@ import Team from './Components/Team/Team';
 import CreatTeam from './Components/Team/CreatTeam';
 import ChatPage from './Components/Chat/ChatPage';
 import ChatWindow from './Components/Chat/ChatWindow';
+import MatchDetails from './Components/Home/MatchDetails';
 //import GroupMessages from './Components/Chat/GroupMessages';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/userUpdate" element={<UserUpdate />} />
           <Route path="/chat" element={<ChatPage />} /> {/* Yeni eklenen sohbet sayfası */}
           <Route path="/chatWindow" element={<ChatWindow />} />
+          <Route path="/match-details/:matchId" element={<MatchDetails />} />
           {/* <Route path="/groupMessages" element={<GroupMessages />} /> */}
         </Routes>
       </BrowserRouter>

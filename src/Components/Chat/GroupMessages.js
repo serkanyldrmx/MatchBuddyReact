@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './GroupMessages.css';
 
-function GroupMessages({ currentUser }) {
+function GroupMessages({ currentUser, onSelectGroup }) {
   const [activeTab, setActiveTab] = useState('group-messages');
   const [groups, setGroups] = useState([]);
   const [groupName, setGroupName] = useState('');
@@ -108,7 +108,7 @@ function GroupMessages({ currentUser }) {
             <div className="group-list">
               {groups.length > 0 ? (
                 groups.map(group => (
-                  <div key={group.groupId} className="group-item">
+                  <div key={group.groupId} className="group-item" onClick={() => onSelectGroup(group)}>
                     <h4>
                       <i className="fas fa-users group-icon"></i> {group.groupName}
                     </h4>
@@ -142,27 +142,27 @@ function GroupMessages({ currentUser }) {
                 onChange={(e) => setSearchName(e.target.value)}
               />
 
-        <div className="player-list">
-        <div className="player-list-scroll">
-            {players
-            .filter(player => 
-                player.playerName.toLowerCase().includes(searchName.toLowerCase()) ||
-                player.playerSurname.toLowerCase().includes(searchName.toLowerCase())
-            )
-            .map((player) => (
-                <div key={player.playerId} className="player-item">
-                <label>
-                    <input
-                    type="checkbox"
-                    checked={selectedPlayers.includes(player.playerId)}
-                    onChange={() => handlePlayerSelection(player.playerId)}
-                    />
-                    {player.playerName} {player.playerSurname}
-                </label>
+              <div className="player-list">
+                <div className="player-list-scroll">
+                  {players
+                    .filter(player => 
+                      player.playerName.toLowerCase().includes(searchName.toLowerCase()) ||
+                      player.playerSurname.toLowerCase().includes(searchName.toLowerCase())
+                    )
+                    .map((player) => (
+                      <div key={player.playerId} className="player-item">
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={selectedPlayers.includes(player.playerId)}
+                            onChange={() => handlePlayerSelection(player.playerId)}
+                          />
+                          {player.playerName} {player.playerSurname}
+                        </label>
+                      </div>
+                    ))}
                 </div>
-            ))}
-        </div>
-        </div>
+              </div>
 
               <button onClick={handleCreateGroup}>Grup Oluştur</button>
             </div>
